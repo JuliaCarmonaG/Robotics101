@@ -20,7 +20,15 @@ Aquí encontrarás los códigos para:
 ¡Como el Santiago Bernabéu, este repositorio también tiene su propia foto del recuerdo! Aquí está nuestro robot estrella, listo para entrar en acción:
 
 <p align="center">
-  <img src="https://github.com/petercorke/robotics-toolbox-python/raw/master/docs/figs/panda1.gif" alt="Panda Robot" width="400"/>
+  <img src="https://raw.githubusercontent.com/petercorke/robotics-toolbox-python/master/docs/figs/panda1.gif" alt="Panda Robot" width="400"/>
+</p>
+
+## ¡El Estadio Lleno de Aficionados!
+
+¡Pero esto no es todo! Aquí está el Santiago Bernabéu, listo para recibir a los aficionados y celebrar nuestros logros en el campo de la robótica:
+
+<p align="center">
+  <img src="https://external-preview.redd.it/DqcvKFdJpz2_0g5VYowaaleD01B3ptP9UB-8dDgAjyc.jpg?auto=webp&s=747f8f05c1f76ef32624216c8047dd89afc994f3" alt="Santiago Bernabéu" width="400"/>
 </p>
 
 ## ¡Únete al Equipo!
