@@ -13,3 +13,4 @@ q=[0, np.deg2rad(30), -np.deg2rad(160), 0, 0, 0]
 robot.teach(q)
 
 
+
