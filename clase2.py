@@ -12,5 +12,4 @@ promedio_goles = 2.5  # Promedio de goles por partido
 probabilidades = calcular_probabilidad_goles(promedio_goles)
 
 for i, goles in enumerate(probabilidades, 1):
-    print(f"Partido {i}: {goles} goles");
-    
+    print(f"Partido {i}: {goles} goles")
