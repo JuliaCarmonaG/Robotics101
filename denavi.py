@@ -40,5 +40,8 @@ T56= T.subs({d: 0.080, a: 0, alpha: 0})
 T56= T56.subs({theta: theta_6})
 sp.pprint(T56)
 T06= T01 @ T12 @ T23 @ T34 @ T45 @ T56
-T06=T06.applyfunc(sp.simplify)
-sp.pprint(T06_simplified)
+T06_s=T06.applyfunc(sp.simplify)
+sp.pprint(T06_s)
+
+latex_code= sp.latex(T06_s)
+print(latex_str)
