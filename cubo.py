@@ -49,4 +49,4 @@ q_sol = np.array([s.q for s in sol])
 
 # ========== Simulación ==========
 # Se usa 'backend="swift"' en lugar de 'pyplot' para evitar bloqueos en la ejecución
-#fanuc.plot(q=q_sol, eeframe=True, backend='swift')
+fanuc.plot(q=sol.q, eeframe=True, backend='pyplot', shadow=True, jointaxes=True, block=True)
