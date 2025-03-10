@@ -34,7 +34,7 @@ T_fanuc = np.array([
 # ========== Generación de la trayectoria ==========
 # Se usa 'mstraj' para generar una trayectoria suave entre los puntos definidos
 via = np.vstack(T_fanuc)
-xyz_traj = mstraj(via, qdmax=[0.5, 0.5, 0.5], dt=0.1, tacc=0.2).q
+xyz_traj = mstraj(via, qdmax=[0.2, 0.2, 0.2], dt=0.1, tacc=0.2).q
 
 # ========== Resolviendo la Cinemática Inversa ==========
 # Se genera la transformación homogénea del efector final para cada punto de la trayectoria
