@@ -15,15 +15,11 @@ fanuc = rtb.DHRobot([
 ], name="Fanuc CR-7iA/L")
 
 # ========== Configuración inicial del robot ==========
-# Se establece la postura inicial del robot con el segundo eje en -90°, como en la tabla DH
-fanuc.qz = [0, -np.pi/2, 0, 0, 0, 0]  
-
-# Configuración de la herramienta del efector final 
-fanuc.tool = SE3.OA([0, 1, 0], [0, 0, 1])  
+fanuc.qz = [0, -np.pi/2, 0, 0, 0, 0]  # Postura inicial con el segundo eje en -90°
+fanuc.tool = SE3.OA([0, 1, 0], [0, 0, 1])  # Configuración del efector final
 
 # ========== Definición de los puntos de trayectoria ==========
-# Se definen los puntos a los que el efector final debe moverse
-# Se suman 330 mm en Z para que estén alineados con la base del robot
+# Se suman 330 mm en Z para alinearlos con el sistema de referencia DH
 T_fanuc = np.array([
     [400, 0, 530],  [600, 0, 530],  
     [400, 0, 330],  [600, 0, 330],
@@ -34,19 +30,18 @@ T_fanuc = np.array([
 # ========== Generación de la trayectoria ==========
 # Se usa 'mstraj' para generar una trayectoria suave entre los puntos definidos
 via = np.vstack(T_fanuc)
-xyz_traj = mstraj(via, qdmax=[0.2, 0.2, 0.2], dt=0.1, tacc=0.2).q
+traj = mstraj(via, qdmax=0.2, dt=0.1, tacc=0.2)
+xyz_traj = traj.q  # Extraemos la trayectoria generada
 
 # ========== Resolviendo la Cinemática Inversa ==========
 # Se genera la transformación homogénea del efector final para cada punto de la trayectoria
 T_tool = [SE3.Trans(p[0], p[1], p[2]) * SE3.OA([0, -1, 0], [1, 0, 0]) for p in xyz_traj]
 
-# Se calcula la cinemática inversa para cada punto en la trayectoria
-# 'mask=[1, 1, 1, 0, 0, 0]' indica que solo se resuelven traslaciones (x, y, z), ignorando orientación
-sol = [fanuc.ikine_LM(T, mask=[1, 1, 1, 0, 0, 0]) for T in T_tool]
+# Se usa ikine_min en vez de ikine_LM para evitar errores
+sol = [fanuc.ikine_min(T, mask=[1, 1, 1, 0, 0, 0]) for T in T_tool]
 
-# Se extraen las configuraciones articulares resultantes
-q_sol = np.array([s.q for s in sol])
+# Verificamos si las soluciones son válidas
+q_sol = np.array([s.q if s.success else fanuc.qz for s in sol])  # Si falla, usa qz
 
 # ========== Simulación ==========
-# Se usa 'backend="swift"' en lugar de 'pyplot' para evitar bloqueos en la ejecución
-fanuc.plot(q=sol.q, eeframe=True, backend='pyplot', shadow=True, jointaxes=True, block=True)
+fanuc.plot(q=q_sol, eeframe=True, backend='swift')  # Cambiado a 'swift' para mejor rendimiento
